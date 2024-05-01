@@ -6,13 +6,13 @@ import '../../linkapi.dart';
 class MyFavoriteData {
   Crud crud;
   MyFavoriteData(this.crud);
-  getData(dynamic id) async {
-    var response = await crud.postData(AppLink.favoriteView, {"id": id.toString()},{});
+  getData(dynamic userid) async {
+    var response = await crud.postData(AppLink.favoriteView, {"id": userid.toString()},{});
     return response.fold((l) => l, (r) => r);
   }
 
-  deleteData(dynamic id) async {
-    var response = await crud.postData(AppLink.deletefromfavroite, {"id": id.toString()},{});
+  deleteData(dynamic userid) async {
+    var response = await crud.postData(AppLink.deletefromfavroite, {"id": userid.toString()},{});
     return response.fold((l) => l, (r) => r);
   }
 }

@@ -15,7 +15,8 @@ class MyFavoriteController extends GetxController {
 
   late StatusRequest statusRequest;
 
-  HomeControllerImp homeControllerImp =Get.put(HomeControllerImp());
+  HomeControllerImp homeControllerImp = Get.put(HomeControllerImp());
+  LoginControllerImp loginController = Get.put(LoginControllerImp());
 
   // MyServices myServices = Get.find();
 
@@ -25,23 +26,23 @@ class MyFavoriteController extends GetxController {
   getData() async {
     // data.clear();
     statusRequest = StatusRequest.loading;
-    int? userId = UserSession().userId;
+    // int? userId = UserSession().userId;
     var response = await favoriteData.getData(
         // myServices.sharedPreferences.getString("id")!
-         userId.toString());
+        loginController.UsersIds[0]);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       // Start backend
       if (response['status'] == "success") {
-      List responsedata = response['data'];
-      // if (responsedata != Null) {
+        List responsedata = response['data'];
+        // if (responsedata != Null) {
         data.assignAll(responsedata.map((e) => MyFavoriteModel.fromJson(e)));
-      // }
-      print("data");
-      print(data);
-    } else {
-      statusRequest = StatusRequest.failure;
+        // }
+        print("data");
+        print(data);
+      } else {
+        statusRequest = StatusRequest.failure;
       }
       // End
     }

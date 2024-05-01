@@ -32,12 +32,13 @@ class ItemsControllerImp extends ItemsController {
 
   ItemsData testData = ItemsData(Get.find());
   HomeControllerImp homeControllerImp = Get.put(HomeControllerImp());
+  LoginControllerImp loginController = Get.put(LoginControllerImp());
 
   List<dynamic> data = [].obs;
 
   late StatusRequest statusRequest;
+   int? UserId = 0;
 
-  LoginControllerImp loginController = Get.put(LoginControllerImp());
 
   @override
   void onInit() {
@@ -52,6 +53,7 @@ class ItemsControllerImp extends ItemsController {
     selectedCat = Get.arguments['selectedcat'];
     catid = Get.arguments['catid'];
     getItems(catid.toString());
+    
   }
 
   @override
@@ -67,17 +69,17 @@ class ItemsControllerImp extends ItemsController {
     // data.clear();
     print("11");
     // String UsersId = loginController.UsersIds[0];
-    // print(loginController.UsersIds);
-    int? userId = UserSession().userId;
-    print(userId);
+    // UserId = loginController.UsersIds[0];
+    print(loginController.UsersIds[0]);
+    // int? userId = UserSession().userId;
+    // print(userId);
     // print(loginController.GetUserId());
 
     statusRequest = StatusRequest.loading;
-    var response =
-        await testData.getData(categoryid,userId
+    var response = await testData.getData(categoryid, loginController.UsersIds[0]
         //  loginController.UsersIds[0]
-            //  myServices.sharedPreferences.getString("id")!
-            );
+        //  myServices.sharedPreferences.getString("id")!
+        );
     print("=============================== Controller $response ");
     // print("UsersId: $UsersId");
     statusRequest = handlingData(response);

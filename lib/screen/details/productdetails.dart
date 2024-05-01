@@ -37,7 +37,7 @@ class ProductDetails extends StatelessWidget {
                 color: AppColor.secoundColor,
                 onPressed: () {
                   controller.cartController.refreshPage();
-                  Get.offNamed(AppRoute.cart);
+                  Get.toNamed(AppRoute.cart);
                 },
                 child: const Text(
                   "Go To Cart",
@@ -98,7 +98,7 @@ class ProductDetails extends StatelessWidget {
                     controller.remove();
                   },
                   price: "${controller.itemsModel.itemsPrice}",
-                  count:countitems,
+                  count:"${controller.countitems}",
                   // "${controller.countitems}",
                   //  "${controller.countitems}"
                    ),

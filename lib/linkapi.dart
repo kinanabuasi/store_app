@@ -1,4 +1,4 @@
-// ignore_for_file: nonant_identifier_names
+// ignore_for_file: nonant_identifier_names, non_constant_identifier_names
 
 class AppLink {
   static String server = "http://localhost:8012/ecommercecourse-PHP--110";
@@ -22,6 +22,7 @@ class AppLink {
   // images
 
   static String images = "$server/upload/";
+  static String addimage = "$server/upload/addImage.php";
 
   // Favorite
 
@@ -35,4 +36,7 @@ class AppLink {
   static String cartadd = "$server/cart/add.php";
   static String cartdelete = "$server/cart/delete.php";
   static String cartgetcountitems = "$server/cart/getcountitems.php";
+
+  //seller
+  static String AddItem = "$server/seller/AddItem.php";
 }

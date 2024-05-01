@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, duplicate_ignore
 
 import 'package:flutter/material.dart';
-
 import '../../constant/constants.dart';
 
 class CustomTextSign extends StatelessWidget {

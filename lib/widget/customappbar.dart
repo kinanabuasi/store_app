@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.logout),
           onPressed: () {
-            Get.offNamed(AppRoute.login);
+            Get.offAllNamed(AppRoute.signUp);
           },
         ),
         Expanded(

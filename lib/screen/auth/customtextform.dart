@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextForm extends StatelessWidget {
   final String hintText;
-  final IconData iconData;
+  final IconData? iconData;
   final TextEditingController? mycontroller;
   final String? Function(String?)? valid;
   final bool isNumber;
@@ -15,7 +15,7 @@ class CustomTextForm extends StatelessWidget {
   CustomTextForm({
     Key? key,
     required this.hintText,
-    required this.iconData,
+    this.iconData,
     this.mycontroller,
     this.valid,
     required this.isNumber,
@@ -31,6 +31,7 @@ class CustomTextForm extends StatelessWidget {
       obscureText: obscuretext == null || obscuretext == false ? false : true,
       autofocus: true,
       keyboardType: keyboard,
+      onTap: onTapIcon,
       controller: mycontroller,
       // obscureText: Obscuretext!,
       style: TextStyle(color: Colors.black),
@@ -47,7 +48,7 @@ class CustomTextForm extends StatelessWidget {
         // contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 40),
         prefixIcon: Icon(iconData),
         suffixIcon: icon2,
-        prefixIconColor: Colors.blue,
+                prefixIconColor: Colors.blue,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
         ),

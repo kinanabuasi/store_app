@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../constant/constants.dart';
 import '../../controller/onboarding_controller.dart';
 import '../../data/datasource/static/static.dart';
@@ -17,7 +16,7 @@ class CustomSliderOnBoarding extends GetView<OnBoardingControllerImp> {
           controller.onPageChanged(val);
         },
         itemCount: onboardinglist.length,
-        itemBuilder: (context, i) => Column(
+        itemBuilder: (context, i) => ListView(
               children: [
                 Image.asset(
                   onboardinglist[i].image!,
@@ -26,11 +25,13 @@ class CustomSliderOnBoarding extends GetView<OnBoardingControllerImp> {
                   fit: BoxFit.fill,
                 ),
                 const SizedBox(height: 60),
-                Text(onboardinglist[i].title!,
-                    style:  TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                        color: AppColor.black)),
+                Center(
+                  child: Text(onboardinglist[i].title!,
+                      style:  TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: AppColor.black)),
+                ),
                 const SizedBox(height: 20),
                 Container(
                     width: double.infinity,

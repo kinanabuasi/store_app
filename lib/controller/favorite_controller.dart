@@ -7,6 +7,7 @@ import 'auth/login_controller.dart';
 
 class FavoriteController extends GetxController {
   FavoriteData favoriteData = FavoriteData(Get.find());
+   LoginControllerImp loginController = Get.put(LoginControllerImp());
 
   List data = [];
 
@@ -24,13 +25,13 @@ class FavoriteController extends GetxController {
     update();
   }
 
-  addFavorite(String itemsid) async {
+  addFavorite(dynamic itemsid) async {
     data.clear();
-    int? userId = UserSession().userId;
+    // int? userId = UserSession().userId;
     statusRequest = StatusRequest.loading;
     var response = await favoriteData.addFavorite(
         // myServices.sharedPreferences.getString("id")!
-         userId.toString(),
+         loginController.UsersIds[0],
         itemsid);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
@@ -50,13 +51,12 @@ class FavoriteController extends GetxController {
     // }
   }
 
-  removeFavorite(String itemsid) async {
+  removeFavorite(dynamic itemsid) async {
     data.clear();
-    int? userId = UserSession().userId;
     statusRequest = StatusRequest.loading;
     var response = await favoriteData.removeFavorite(
         // myServices.sharedPreferences.getString("id")!
-         userId.toString(),
+         loginController.UsersIds[0],
         itemsid);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);

@@ -39,7 +39,6 @@ class Login extends StatelessWidget {
             //   image: AssetImage(
             //     ImageAsset.background2,
             //   ),
-
             //   fit: BoxFit.cover,
             //   // padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             // ),

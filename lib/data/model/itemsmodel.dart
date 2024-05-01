@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_this
+// ignore_for_file: unnecessary_this, unnecessary_new
 
 class ItemsModel {
   dynamic itemsId;

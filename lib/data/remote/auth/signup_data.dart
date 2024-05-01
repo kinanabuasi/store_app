@@ -10,12 +10,14 @@ import '../../../linkapi.dart';
 class SignupData {
   Crud crud;
   SignupData(this.crud);
-  postdata(String username, String email, String password, String phone) async {
+  postdata(String username, String email, String password,
+   String phone, String type) async {
     var response = await crud.postData(AppLink.signup, {
       "username": username,
       "email": email,
       "password": password,
-      "phone": phone
+      "phone": phone,
+      "type": type
     }, {});
     return response.fold((l) => l, (r) => r);
   }

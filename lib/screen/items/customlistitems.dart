@@ -77,21 +77,21 @@ class CustomListItems extends GetView<ItemsControllerImp> {
                       GetBuilder<FavoriteController>(
                           builder: (controller) => IconButton(
                               onPressed: () {
-                                if (controller.isFavorite[itemsModel.itemsId.toString()] ==
-                                    "1") {
+                                if (controller.isFavorite[itemsModel.itemsId] ==
+                                    1) {
                                   controller.setFavorite(
-                                      itemsModel.itemsId.toString(), "0");
+                                      itemsModel.itemsId, 0);
                                   controller.removeFavorite(
-                                      itemsModel.itemsId.toString());
+                                      itemsModel.itemsId);
                                 } else {
                                   controller.setFavorite(
-                                      itemsModel.itemsId.toString(), "1");
+                                      itemsModel.itemsId, 1);
                                   controller.addFavorite(
-                                      itemsModel.itemsId.toString());
+                                      itemsModel.itemsId);
                                 }
                               },
                               icon: Icon(
-                                controller.isFavorite[itemsModel.itemsId.toString()] == "1"
+                                controller.isFavorite[itemsModel.itemsId] == 1
                                     ? Icons.favorite
                                     : Icons.favorite_border_outlined,
                                 color: AppColor.primaryColor,

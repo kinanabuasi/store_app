@@ -14,4 +14,5 @@ class AppColor {
   static Color grey = Color(0xff8e8e8e);
   static Color black = Color.fromARGB(255, 0, 0, 0);
   static Color white = Color.fromARGB(255, 255, 255, 255);
+  static Color SkinColor = Color.fromARGB(255, 255, 189, 89);
 }

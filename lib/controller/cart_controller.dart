@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/class/statusrequest.dart';
@@ -11,6 +10,7 @@ class CartController extends GetxController {
   TextEditingController? controllercoupon;
 
   CartData cartData = CartData(Get.find());
+  LoginControllerImp loginController = Get.put(LoginControllerImp());
 
   int? discountcoupon = 0;
   String? couponname;
@@ -29,12 +29,12 @@ class CartController extends GetxController {
 
   add(String itemsid) async {
     statusRequest = StatusRequest.loading;
-    int? userId = UserSession().userId;
+    // int? userId = UserSession().userId;
     update();
     var response = await cartData.addCart(
         // myServices.sharedPreferences.getString("id")!,
-       userId.toString(),
-         itemsid);
+        loginController.UsersIds[0],
+        itemsid);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
@@ -52,9 +52,8 @@ class CartController extends GetxController {
     update();
   }
 
-
-  getTotalPrice(){
-   return (priceorders - priceorders * discountcoupon! / 100 )   ; 
+  getTotalPrice() {
+    return (priceorders - priceorders * discountcoupon! / 100);
   }
 
   delete(String itemsid) async {
@@ -63,8 +62,8 @@ class CartController extends GetxController {
 
     var response = await cartData.deleteCart(
         // myServices.sharedPreferences.getString("id")!,
-        "3",
-         itemsid);
+        loginController.UsersIds[0],
+        itemsid);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
@@ -94,11 +93,11 @@ class CartController extends GetxController {
   //       Map<String, dynamic> datacoupon = response['data'];
   //       couponModel = CouponModel.fromJson(datacoupon);
   //       discountcoupon = int.parse(couponModel!.couponDiscount!);
-  //       couponname = couponModel!.couponName ; 
+  //       couponname = couponModel!.couponName ;
   //     } else {
   //       // statusRequest = StatusRequest.failure;
-  //       discountcoupon = 0 ; 
-  //       couponname = null ; 
+  //       discountcoupon = 0 ;
+  //       couponname = null ;
   //     }
   //     // End
   //   }
@@ -118,26 +117,27 @@ class CartController extends GetxController {
 
   view() async {
     statusRequest = StatusRequest.loading;
-    int? userId = UserSession().userId;
+    // int? userId = UserSession().userId;
     update();
-    var response =
-        await cartData.viewCart(
-          // myServices.sharedPreferences.getString("id")!
-          userId.toString(),
-        );
+    var response = await cartData.viewCart(
+      // myServices.sharedPreferences.getString("id")!
+      loginController.UsersIds[0],
+    );
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       // Start backend
       if (response['status'] == "success") {
         // if (response['datacart']['status'] == 'success') {
-          List dataresponse = response['datacart'];
-          Map dataresponsecountprice = response['countprice'];
-          data.clear();
-          data.addAll(dataresponse.map((e) => CartModel.fromJson(e)));
-          totalcountitems = int.parse(dataresponsecountprice['totalcount'].toString());
-          priceorders = double.parse(dataresponsecountprice['totalprice'].toString());
-          print(priceorders);
+        List dataresponse = response['datacart'];
+        Map dataresponsecountprice = response['countprice'];
+        data.clear();
+        data.addAll(dataresponse.map((e) => CartModel.fromJson(e)));
+        totalcountitems =
+            int.parse(dataresponsecountprice['totalcount'].toString());
+        priceorders =
+            double.parse(dataresponsecountprice['totalprice'].toString());
+        print(priceorders);
         // }
       } else {
         statusRequest = StatusRequest.failure;

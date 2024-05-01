@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, must_call_super, non_constant_identifier_names, override_on_non_overriding_member, avoid_print, prefer_const_constructors
+// ignore_for_file: unused_import, must_call_super, non_constant_identifier_names, override_on_non_overriding_member, avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +11,7 @@ import '../../data/remote/auth/signup_data.dart';
 import '../../data/remote/test_data.dart';
 import '../../screen/auth/signup.dart';
 import '../../widget/TopSnackBar.dart';
+import '../../widget/showMenu.dart';
 
 abstract class SignUpController extends GetxController {
   signUp(context);
@@ -26,10 +27,24 @@ class SignUpControllerImp extends SignUpController {
   late TextEditingController password;
   late TextEditingController username;
   late TextEditingController phone;
+  late TextEditingController type;
   // bool isshowpassword = true;
   SignupData signUpData = SignupData(Get.find());
   List data = [];
   var passwordVisible = false;
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("seller"), value: "seller"),
+      DropdownMenuItem(child: Text("client"), value: "client"),
+    ];
+    return menuItems;
+  }
+
+  final selectedValue = 'seller'.obs;
+  final items = [
+    'seller',
+    'client',
+  ].obs;
 
   void togglePasswordVisibility() {
     passwordVisible = !passwordVisible;
@@ -42,6 +57,7 @@ class SignUpControllerImp extends SignUpController {
     password = TextEditingController();
     username = TextEditingController();
     phone = TextEditingController();
+    type = TextEditingController();
     super.onInit();
   }
 
@@ -51,6 +67,7 @@ class SignUpControllerImp extends SignUpController {
     password.dispose();
     username.dispose();
     phone.dispose();
+    type.dispose();
     super.dispose();
   }
 
@@ -59,7 +76,7 @@ class SignUpControllerImp extends SignUpController {
     if (formStatesignupkey.currentState!.validate()) {
       var statusRequest = StatusRequest.loading;
       var response = await signUpData.postdata(
-          username.text, email.text, password.text, phone.text);
+          username.text, email.text, password.text, phone.text, type.text);
       print("=============================== Controller success $response ");
       statusRequest = handlingData(response);
       print("===========$statusRequest **");
@@ -70,7 +87,7 @@ class SignUpControllerImp extends SignUpController {
         //       "============= success $response['data'] ");
         print("===********====== Controller success $response ");
         TopSnackBar_success(context, "Successfully Sign Up");
-        Get.toNamed(AppRoute.login);
+        Get.offNamed(AppRoute.login);
       } else {
         statusRequest = StatusRequest.failure;
         print("=============================== Controller $response ");
@@ -95,4 +112,9 @@ class SignUpControllerImp extends SignUpController {
 
   @override
   showpassword() {}
+
+  // @override
+  // showMenu() {
+  //   ShowMenu(MenuList:[ "client","seller"]);
+  // }
 }

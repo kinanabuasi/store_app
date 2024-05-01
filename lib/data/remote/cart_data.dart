@@ -6,27 +6,27 @@ import '../../linkapi.dart';
 class CartData {
   Crud crud;
   CartData(this.crud);
-  addCart(String userid, String itemid) async {
+  addCart(int userid, String itemid) async {
     var response = await crud
-        .postData(AppLink.cartadd, {"userid": userid, "itemid": itemid.toString()},{});
+        .postData(AppLink.cartadd, {"userid": userid.toString(), "itemid": itemid.toString()},{});
     return response.fold((l) => l, (r) => r);
   }
 
-  deleteCart(String userid, String itemid) async {
+  deleteCart(int userid, String itemid) async {
     var response = await crud
-        .postData(AppLink.cartdelete, {"userid": userid, "itemid": itemid.toString()},{});
+        .postData(AppLink.cartdelete, {"userid": userid.toString(), "itemid": itemid.toString()},{});
     return response.fold((l) => l, (r) => r);
   }
 
-  getCountCart(String userid, String itemid) async {
+  getCountCart(int userid, int itemid) async {
     var response = await crud.postData(
-        AppLink.cartgetcountitems, {"userid": userid, "itemid": itemid.toString()},{});
+        AppLink.cartgetcountitems, {"userid": userid.toString(), "itemid": itemid.toString()},{});
     return response.fold((l) => l, (r) => r);
   }
 
-  viewCart(String userid) async {
+  viewCart(int userid) async {
     var response = await crud.postData(AppLink.cartview, {
-      "userid": userid,
+      "userid": userid.toString(),
     },{});
     return response.fold((l) => l, (r) => r);
   }

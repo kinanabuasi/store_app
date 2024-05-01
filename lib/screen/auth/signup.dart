@@ -10,6 +10,7 @@ import '../../core/class/crud.dart';
 import '../../constant/routes.dart';
 import '../../core/functions/alertexitapp.dart';
 import '../../core/functions/localization/validinput.dart';
+import '../../widget/DropdownMenu.dart';
 import 'CustomButtomAuth.dart';
 import 'customlogo.dart';
 import 'customtextform.dart';
@@ -33,7 +34,7 @@ class SignUp extends StatelessWidget {
         onWillPop: alertExitApp,
         child: Container(
           padding: EdgeInsets.all(5),
-        color: Color.fromARGB(255, 255, 189, 89),
+          color: AppColor.SkinColor,
           // decoration: BoxDecoration(
           //     image: DecorationImage(
           //   image: AssetImage(ImageAsset.background2),
@@ -64,10 +65,10 @@ class SignUp extends StatelessWidget {
                         keyboard: TextInputType.name,
                         isNumber: false,
                         valid: (val) {
-                          return validInput(val!, 3, 20, "firstname");
+                          return validInput(val!, 3, 20, "username");
                         },
                         mycontroller: controller.username,
-                        hintText: "Enter your Full name",
+                        hintText: "Enter UserName",
                         iconData: Icons.person,
                       ),
                     ),
@@ -171,14 +172,21 @@ class SignUp extends StatelessWidget {
                         mycontroller: controller.phone,
                         hintText: "Enter your Phone number",
                         iconData: Icons.phone_android,
-                        icon2: IconButton(
-                          icon: Icon(controller.passwordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () {
-                            controller.togglePasswordVisibility();
-                          },
-                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.04,
+                    ),
+                    SizedBox(
+                      width: screenWidth * 0.6,
+                      height: screenHeight * 0.09,
+                      child: DropdownItem(
+                        valid: (val) {
+                          validInput(val!, 2, 30, "type");
+                        },
+                        mycontroller: controller.type,
+                        selectedValue:controller.selectedValue.value,
+                       Items: controller.items,
                       ),
                     ),
 

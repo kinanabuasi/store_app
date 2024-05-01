@@ -32,7 +32,9 @@ class LoginControllerImp extends LoginController {
   List data = [];
   List UsersData = [];
   List<String> UsersNames = [];
+  List<String> UsersTypes = [];
   List UsersIds = [].obs;
+  bool IfSeller = false;
 
   // LoginControllerImp(find);
 
@@ -45,33 +47,38 @@ class LoginControllerImp extends LoginController {
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
         if (response['status'] == "success") {
-        UsersData.assignAll(response['data']);
-        // UsersNames.clear();
-        // UsersIds.clear();
-        for (var item in UsersData) {
-          User user = User(
-            id: item["user_id"],
-            name: item["user_name"],
-          );
-          UsersNames.add(user.name);
-          UsersIds.add(user.id);
-        }
-        print("ID: $UsersIds, Name: $UsersNames");
-        print(UsersIds[0]);
-        // print(UsersNames[0]);
-        // }
-        UserSession().userId = UsersIds[0];
+          UsersData.assignAll(response['data']);
+          // UsersNames.clear();
+          // UsersIds.clear();
+          for (var item in UsersData) {
+            User user = User(
+              id: item["user_id"],
+              name: item["user_name"],
+              user_type: item["user_type"],
+            );
+            UsersNames.add(user.name);
+            UsersIds.add(user.id);
+            UsersTypes.add(user.user_type);
+          }
+          print("ID: $UsersIds, Name: $UsersNames,Type: $UsersTypes");
+          print(UsersIds[0]);
+          print(UsersTypes[0]);
+          IfSellerUser();
+          // print(UsersNames[0]);
+          // }
+          // UserSession().userId = UsersIds[0];
 
-        TopSnackBar_success(context, "Successfully Log In");
-        Get.offNamed(AppRoute.HomeScreen);
-      } else {
-        statusRequest = StatusRequest.failure;
-        TopSnackBar_error(context, "Unfortunately, your Sign In is Faild, Email or password is Wrong");
-      //   Get.defaultDialog(
-      //       title: "Warning",
-      //       middleText:
-      //           "Unfortunately, your Sign In is Faild, Email or password is Wrong");
-      }
+          TopSnackBar_success(context, "Successfully Log In");
+          Get.toNamed(AppRoute.HomeView);
+        } else {
+          statusRequest = StatusRequest.failure;
+          TopSnackBar_error(context,
+              "Unfortunately, your Sign In is Faild, Email or password is Wrong");
+          //   Get.defaultDialog(
+          //       title: "Warning",
+          //       middleText:
+          //           "Unfortunately, your Sign In is Faild, Email or password is Wrong");
+        }
       }
       update();
     } else {}
@@ -92,6 +99,14 @@ class LoginControllerImp extends LoginController {
     super.dispose();
   }
 
+  IfSellerUser() {
+    if (UsersTypes[0] == "seller") {
+      IfSeller = true;
+      print(IfSeller);
+    }
+    update();
+  }
+
   @override
   goToSignUp() {
     Get.offNamed(AppRoute.signUp);
@@ -101,7 +116,6 @@ class LoginControllerImp extends LoginController {
   // GetUserId(){
   //   return UsersIds[0];
   // }
-
   // @override
   // HandleUsersData() async {
   //   String token = data[0];
@@ -136,7 +150,8 @@ class LoginControllerImp extends LoginController {
 class User {
   dynamic id;
   dynamic name;
-  User({required this.id, required this.name});
+  dynamic user_type;
+  User({required this.id, required this.name, required this.user_type});
 }
 
 class UserSession {

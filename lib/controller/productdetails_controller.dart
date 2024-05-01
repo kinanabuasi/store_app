@@ -13,6 +13,7 @@ abstract class ProductDetailsController extends GetxController {}
 class ProductDetailsControllerImp extends ProductDetailsController {
   CartController cartController = Get.put(CartController());
   HomeControllerImp homeControllerImp = Get.put(HomeControllerImp());
+  LoginControllerImp loginController = Get.put(LoginControllerImp());
 
   late ItemsModel itemsModel;
   CartData cartData = CartData(Get.find());
@@ -26,16 +27,16 @@ class ProductDetailsControllerImp extends ProductDetailsController {
   intialData() async {
     statusRequest = StatusRequest.loading;
     itemsModel = Get.arguments['itemsmodel'];
-    countitems = await getCountItems(itemsModel.itemsId.toString());
+    countitems = await getCountItems(itemsModel.itemsId!);
     update();
   }
 
-  getCountItems(String itemsid) async {
+  getCountItems(int itemsid) async {
     statusRequest = StatusRequest.loading;
-    int? userId = UserSession().userId;
+    // int? userId = UserSession().userId;
     var response = await cartData.getCountCart(
         // myServices.sharedPreferences.getString("id")!,
-        userId.toString(),
+        loginController.UsersIds[0],
         itemsid);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
@@ -58,11 +59,11 @@ class ProductDetailsControllerImp extends ProductDetailsController {
 
   addItems(String itemsid) async {
     statusRequest = StatusRequest.loading;
-    int? userId = UserSession().userId;
+    // int? userId = UserSession().userId;
     update();
     var response = await cartData.addCart(
         // myServices.sharedPreferences.getString("id")!,
-        userId.toString(),
+        loginController.UsersIds[0],
         itemsid);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
@@ -83,12 +84,12 @@ class ProductDetailsControllerImp extends ProductDetailsController {
 
   deleteitems(String itemsid) async {
     statusRequest = StatusRequest.loading;
-    int? userId = UserSession().userId;
+    // int? userId = UserSession().userId;
     update();
 
     var response = await cartData.deleteCart(
         // myServices.sharedPreferences.getString("id")!,
-        userId.toString(),
+        loginController.UsersIds[0],
         itemsid);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
@@ -117,6 +118,7 @@ class ProductDetailsControllerImp extends ProductDetailsController {
     addItems(itemsModel.itemsId.toString());
     countitems++;
     // UserSession1().countitem =countitems;
+    print("countitems: ");
     print(countitems);
     update();
   }
